@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kemali.mapper.ClazzMapper">
+    
+    <!-- 结果映射 -->
+    <resultMap id="ClazzResultMap" type="com.kemali.pojo.Clazz">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="room" column="room" />
+        <result property="beginDate" column="begin_date" />
+        <result property="endDate" column="end_date" />
+        <result property="masterId" column="master_id" />
+        <result property="subject" column="subject" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="status" column="status" />
+        <result property="masterName" column="masterName" />
+    </resultMap>
+    
+    <!-- 条件分页查询班级列表 -->
+    <select id="page" resultMap="ClazzResultMap">
+        select 
+            c.*,
+            e.name as masterName,
+            (case when now() &lt; c.begin_date then '未开班'
+                  when now() &gt; c.end_date then '已结课'
+                  else '在读'
+            end) as status
+        from tlias.clazz c 
+        left join tlias.emp e on c.master_id = e.id
+        <where>
+            <if test="name != null and name != ''">
+                and c.name like concat('%', #{name}, '%')
+            </if>
+            <if test="begin != null">
+                and c.end_date &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and c.end_date &lt;= #{end}
+            </if>
+        </where>
+        order by c.create_time desc
+        limit #{offset}, #{pageSize}
+    </select>
+    
+    <!-- 查询条件匹配的总记录数 -->
+    <select id="count" resultType="java.lang.Long">
+        select count(*)
+        from tlias.clazz c
+        <where>
+            <if test="name != null and name != ''">
+                and c.name like concat('%', #{name}, '%')
+            </if>
+            <if test="begin != null">
+                and c.end_date &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and c.end_date &lt;= #{end}
+            </if>
+        </where>
+    </select>
+    
+    <!-- 根据ID查询班级信息 -->
+    <select id="getClazzById" resultMap="ClazzResultMap">
+        select 
+            c.*,
+            e.name as masterName,
+            (case when now() &lt; c.begin_date then '未开班'
+                  when now() &gt; c.end_date then '已结课'
+                  else '在读'
+            end) as status
+        from tlias.clazz c 
+        left join tlias.emp e on c.master_id = e.id
+        where c.id = #{id}
+    </select>
+    
+    <!-- 修改班级信息 -->
+    <update id="update" parameterType="com.kemali.pojo.Clazz">
+        update tlias.clazz
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="room != null and room != ''">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

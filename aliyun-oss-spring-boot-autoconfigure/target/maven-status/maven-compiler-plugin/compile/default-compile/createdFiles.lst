@@ -1,0 +1,3 @@
+com\aliyun\oss\AliyunOSSOperator.class
+com\aliyun\oss\AliyunOSSProperties.class
+com\aliyun\oss\AliyunOSSAutoConfiguration.class

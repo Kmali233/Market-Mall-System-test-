@@ -1,0 +1,16 @@
+com\kemali\pojo\AliyunOSSProperties.class
+com\kemali\pojo\Student.class
+com\kemali\pojo\Clazz.class
+com\kemali\pojo\EmpExpr.class
+com\kemali\pojo\OperateLog.class
+com\kemali\pojo\StudentQueryParam.class
+com\kemali\pojo\ClazzQueryParam.class
+com\kemali\pojo\Emp.class
+com\kemali\pojo\EmpQueryParam.class
+com\kemali\pojo\Result.class
+com\kemali\pojo\EmpLog.class
+com\kemali\pojo\JobOption.class
+com\kemali\pojo\LoginInfo.class
+com\kemali\pojo\PageResult.class
+com\kemali\pojo\ClazzOption.class
+com\kemali\pojo\Dept.class

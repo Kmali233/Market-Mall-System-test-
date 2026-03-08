@@ -1,0 +1,115 @@
+<!--定义Mapper映射文件的约束和基本结构-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kemali.mapper.EmpMapper">
+    <!--自定义结果集ResultMap-->
+    <resultMap id="empResultMap" type="com.kemali.pojo.Emp">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="phone" property="phone" />
+        <result column="job" property="job" />
+        <result column="salary" property="salary" />
+        <result column="image" property="image" />
+        <result column="entry_date" property="entryDate" />
+        <result column="dept_id" property="deptId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="deptName" property="deptName" />
+
+        <!--封装exprList-->
+        <collection property="exprList" ofType="com.kemali.pojo.EmpExpr">
+            <id column="ee_id" property="id"/>
+            <result column="ee_company" property="company"/>
+            <result column="ee_job" property="job"/>
+            <result column="ee_begin" property="begin"/>
+            <result column="ee_end" property="end"/>
+            <result column="ee_empid" property="empId"/>
+        </collection>
+    </resultMap>
+
+    <select id="list" resultType="com.kemali.pojo.Emp">
+        select e.*, d.name deptName from tlias.emp as e left join tlias.dept as d on e.dept_id = d.id
+        <where>
+            <if test="name != null and name != ''">
+                e.name like concat('%',#{name},'%')
+            </if>
+            <if test="gender != null">
+                and e.gender = #{gender}
+            </if>
+            <if test="begin != null and end != null">
+                and e.entry_date between #{begin} and #{end}
+            </if>
+        </where>
+    </select>
+    
+    <!--根据ID查询员工的详细信息-->
+    <select id="findById" resultMap="empResultMap">
+        select e.*, d.name deptName,
+            ee.id ee_id,
+            ee.emp_id ee_empid,
+            ee.begin ee_begin,
+            ee.end ee_end,
+            ee.company ee_company,
+            ee.job ee_job
+        from tlias.emp e 
+        left join tlias.dept d on e.dept_id = d.id
+        left join tlias.emp_expr ee on e.id = ee.emp_id
+        where e.id = #{id}
+    </select>
+    
+    <!-- 批量删除员工 -->
+    <delete id="deleteByIds">
+        delete from tlias.emp where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <!-- 修改员工信息 -->
+    <update id="update">
+        update tlias.emp 
+        set username = #{username}, 
+            name = #{name}, 
+            gender = #{gender}, 
+            phone = #{phone}, 
+            job = #{job}, 
+            salary = #{salary}, 
+            image = #{image}, 
+            entry_date = #{entryDate}, 
+            dept_id = #{deptId}, 
+            update_time = #{updateTime} 
+        where id = #{id}
+    </update>
+
+    <!-- 统计各个职位的员工人数 -->
+    <select id="countEmpJobData" resultType="java.util.Map">
+        select
+            (case job when 1 then '班主任'
+                      when 2 then '讲师'
+                      when 3 then '学工主管'
+                      when 4 then '教研主管'
+                      when 5 then '咨询师'
+                      else '其他' end)  pos,
+            count(*) total
+        from emp group by job
+        order by total
+    </select>
+
+    <!-- 统计员工的性别信息 -->
+    <select id="countEmpGenderData" resultType="java.util.Map">
+        select
+            if(gender = 1, '男', '女') as name,
+            count(*) as value
+        from emp group by gender ;
+    </select>
+    
+    <!-- 统计指定部门的员工数量 -->
+    <select id="countByDeptId" resultType="java.lang.Integer">
+        select count(*) from tlias.emp where dept_id = #{deptId}
+    </select>
+
+</mapper>

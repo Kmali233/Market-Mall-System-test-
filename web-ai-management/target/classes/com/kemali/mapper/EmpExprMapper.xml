@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kemali.mapper.EmpExprMapper">
+
+    <!--批量插入员工工作经历信息-->
+    <insert id="insertBatch">
+        insert into emp_expr (emp_id, begin, end, company, job) values
+        <foreach collection="exprList" item="expr" separator=",">
+            (#{expr.empId}, #{expr.begin}, #{expr.end}, #{expr.company}, #{expr.job})
+        </foreach>
+    </insert>
+    
+    <!-- 根据员工ID批量删除工作经历 -->
+    <delete id="deleteByEmpIds">
+        delete from emp_expr where emp_id in
+        <foreach collection="list" item="empId" open="(" separator="," close=")">
+            #{empId}
+        </foreach>
+    </delete>
+    
+    <!-- 根据员工ID查询工作经历 -->
+    <select id="findByEmpId" resultType="com.kemali.pojo.EmpExpr">
+        select * from emp_expr where emp_id = #{empId}
+        order by begin desc
+    </select>
+
+</mapper>
