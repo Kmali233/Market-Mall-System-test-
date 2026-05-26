@@ -1,0 +1,15 @@
+server:
+  port: 8083
+feign:
+  okhttp:
+    enabled: true
+  sentinel:
+    enabled: true
+elasticsearch:
+  host: 192.168.100.128
+hm:
+  swagger:
+    title: 搜索服务接口文档
+    package: com.hmall.search.controller
+  db:
+    database: hm-item
