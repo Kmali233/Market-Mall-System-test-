@@ -5,8 +5,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://mysql:3306/tlias
-    username: root
-    password: 1234
+    username: xxx
+    password: xxx
 
   servlet:
     multipart:
@@ -31,7 +31,7 @@ mybatis:
 aliyun:
   oss:
     endpoint: https://oss-cn-beijing.aliyuncs.com
-    bucketName: kemali-javaweb
+    bucketName: xxx
     region: cn-beijing
 
 # 测试环境白名单：放行所有/test开头的接口、swagger文档、健康检查等

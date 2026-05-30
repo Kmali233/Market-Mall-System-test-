@@ -16,7 +16,7 @@ public class Demo {
         // 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET。
         EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = "kemali-javaweb";
+        String bucketName = "xxx";
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String objectName = "a114514.png";   // 在Bucket中存储的对象的名称
         // 填写Bucket所在地域。以华东1（杭州）为例，Region填写为cn-hangzhou。
@@ -35,7 +35,7 @@ public class Demo {
 
         try {
             // 填写字符串。
-            File file = new File("D:\\q'w'q\\Downloads\\ScreenShot_2025-12-23_194530_029.png");
+            File file = new File("xxx");
             byte[] content = Files.readAllBytes(file.toPath());
 
             // 创建PutObjectRequest对象。
