@@ -6,7 +6,7 @@ feign:
   sentinel:
     enabled: true
 elasticsearch:
-  host: 192.168.100.128
+  host: xxx
 hm:
   swagger:
     title: 搜索服务接口文档

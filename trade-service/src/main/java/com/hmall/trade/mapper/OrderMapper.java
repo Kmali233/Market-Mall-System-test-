@@ -9,7 +9,7 @@ import com.hmall.trade.domain.po.Order;
  *  Mapper 接口
  * </p>
  *
- * @author 虎哥
+ * @author xxx
  * @since 2023-05-05
  */
 public interface OrderMapper extends BaseMapper<Order> {

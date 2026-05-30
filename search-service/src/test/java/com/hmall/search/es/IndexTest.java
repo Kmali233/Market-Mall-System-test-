@@ -21,7 +21,7 @@ public class IndexTest {
     @BeforeEach
     void setUp() {
         this.client = new RestHighLevelClient(RestClient.builder(
-                HttpHost.create("http://192.168.100.128:9200")
+                HttpHost.create("http://xxx")
         ));
     }
 

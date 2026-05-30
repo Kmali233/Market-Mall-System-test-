@@ -13,7 +13,7 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "hm.mq")
 public class MqConfigProperties {
     /** RabbitMQ服务器主机地址 */
-    private String host = "192.168.100.128";
+    private String host = "xxx";
     
     /** RabbitMQ服务器端口号 */
     private Integer port = 5672;
@@ -22,10 +22,10 @@ public class MqConfigProperties {
     private String vhost = "/hmxt";
     
     /** RabbitMQ连接用户名 */
-    private String username = "kemali";
+    private String username = "xxx";
     
     /** RabbitMQ连接密码 */
-    private String password = "1234";
+    private String password = "xxx";
     
     /** 消息监听器配置 */
     private Listener listener = new Listener();
